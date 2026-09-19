@@ -2,23 +2,23 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>Retail_Sales_ETL</Name>
-    <LastWriteTime>2026-09-17T19:05:43.1383726Z</LastWriteTime>
+    <LastWriteTime>2026-09-19T09:12:57.7870757Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>01_LoadCustomers.dtsx</Name>
-      <LastWriteTime>2026-09-17T19:05:43.1173913Z</LastWriteTime>
+      <LastWriteTime>2026-09-19T08:07:07.7223871Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>02_LoadProducts.dtsx</Name>
-      <LastWriteTime>2026-09-17T12:13:41.7996773Z</LastWriteTime>
+      <LastWriteTime>2026-09-19T08:07:00.7460791Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>03_LoadStores.dtsx</Name>
-      <LastWriteTime>2026-09-17T11:52:57.0509728Z</LastWriteTime>
+      <LastWriteTime>2026-09-19T09:12:57.7655469Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

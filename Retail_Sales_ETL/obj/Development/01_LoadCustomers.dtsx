@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="01_LoadCustomers"
   DTS:PackageType="5"
-  DTS:VersionBuild="140"
-  DTS:VersionGUID="{411A7CC5-0E58-414E-9920-27F64BBB743F}">
+  DTS:VersionBuild="148"
+  DTS:VersionGUID="{EC74DB88-0AFF-4FB4-898E-FA3B3CDC80CF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -159,7 +159,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdoaXLukci0qI23dN+tWSGwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAfK9xKC6YWchTpHrG/Z6yrBoR1yxDAPDx902VvD8RdcgAAAAAOgAAAAAIAACAAAACoLj6S3dJUTiyqJCdpp/QAMuuCaVVvpkUJo/QHU/A2+iAAAAArWHEiUKOTO6yastYEaf1DDAz/ENKxFKS3A5rBpHrIh0AAAAAoMGzfdB8WI/2SwVcgdT2S5jNp99UeJiAxN47L8z/pFjKC7WWh9+/pJ+9ddtCgFto7FB8L1zMeDREadZ8nx5A4</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdoaXLukci0qI23dN+tWSGwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACw9LCo8+AApupNXHbIUwkZxUeVJNskvaqAQzAv6PMkagAAAAAOgAAAAAIAACAAAACVZNCcIX3ypg4EWe2QMAVRejo5Ihfcu9OJyPy66gvLeyAAAACUmX0pKqWVJbTRhFt9xcQsH7lybCK3el4gwWJvDncgNUAAAADfX1E1FmmNfReB0Eg5u4sNf6WZ4LJMpTGP9+fmJYE38/3FV2czMOG8kwNYnPo0HRxtFfesuLA/5bRP6qojnzjn</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -208,12 +208,12 @@
       DTS:CreationName=""
       DTS:DTSID="{5593B869-D946-4B11-B3B8-8F43384F21B0}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="@[User::ArchiveFolder] + &quot;\\&quot; +  @[User::FileName]"
+      DTS:Expression="@[User::ArchiveFolder]&#xA;+ &quot;\\&quot;&#xA;+ LEFT(@[User::FileName], FINDSTRING(@[User::FileName], &quot;.&quot;, 1) - 1)&#xA;+ &quot;_&quot;&#xA;+ (DT_WSTR,4) YEAR(GETDATE())&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) MONTH(GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DAY(GETDATE()), 2)&#xA;+ &quot;_&quot;&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;hh&quot;, GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;mi&quot;, GETDATE()), 2)&#xA;+ &quot;.csv&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="DestinationPath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers_20260919_1454.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -2081,13 +2081,13 @@ WHERE BatchID = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">![ISNULL](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}) || [TRIM](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}) != "" &amp;&amp; [FINDSTRING](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]},"@",1) == 0</property>
+                          name="Expression">[ISNULL](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}) || [TRIM](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}) == "" &amp;&amp; [FINDSTRING](#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]},"@",1) == 0</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">!ISNULL(Email) || TRIM(Email) != "" &amp;&amp; FINDSTRING(Email,"@",1) == 0</property>
+                          name="FriendlyExpression">ISNULL(Email) || TRIM(Email) == "" &amp;&amp; FINDSTRING(Email,"@",1) == 0</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -5754,7 +5754,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
-              SQLTask:Connection="{B4C21A49-1A26-4C7E-AAC2-DB3C988C172C}"
+              SQLTask:Connection="{553A488C-6DC2-42E8-BC76-17B0F20CC404}"
               SQLTask:SqlStatementSource="Update ETLAudit&#xA;   SET EndTime=GETDATE(), Status='Failed',&#xA;       ErrorMessage = ?&#xA;   WHERE AuditID = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
               <SQLTask:ParameterBinding
                 SQLTask:ParameterName="0"
@@ -5783,7 +5783,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
-              SQLTask:Connection="{B4C21A49-1A26-4C7E-AAC2-DB3C988C172C}"
+              SQLTask:Connection="{553A488C-6DC2-42E8-BC76-17B0F20CC404}"
               SQLTask:SqlStatementSource="Update FileImports SET FileImportStatus='Failed'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
@@ -5923,28 +5923,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="224.153696603346,123.066666100158">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,32.9333328150383"
-              Start="0,0"
-              End="0,25.4333328150383">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,25.4333328150383" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="227.12036386192,362.26666443679">
           <EdgeLayout.Curve>
@@ -6032,6 +6010,28 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="224.153696603346,123.066666100158">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.9333328150383"
+              Start="0,0"
+              End="0,25.4333328150383">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.4333328150383" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -6039,57 +6039,61 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package.EventHandlers[OnError]">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="NaN,NaN"
+          Size="259.2,41.6"
           Id="Package.EventHandlers[OnError]\FST - Move Current File to Error Folder"
-          TopLeft="NaN,NaN" />
+          TopLeft="5.5,107.1" />
         <NodeLayout
-          Size="NaN,NaN"
+          Size="190.4,41.6"
           Id="Package.EventHandlers[OnError]\SQL -  Update ETLAudit"
-          TopLeft="NaN,NaN" />
+          TopLeft="39.9,5.49999999999995" />
         <NodeLayout
-          Size="NaN,NaN"
+          Size="196,41.6"
           Id="Package.EventHandlers[OnError]\SQL - Update FileImports"
-          TopLeft="NaN,NaN" />
+          TopLeft="37.1,208.7" />
         <EdgeLayout
           Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
-          TopLeft="NaN,NaN">
+          TopLeft="135.1,47.1">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="{assembly:Null}"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,0">
+              End="0,52.5">
               <mssgle:Curve.Segments>
-                <assembly:Null />
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint 1]"
-          TopLeft="NaN,NaN">
+          TopLeft="135.1,148.7">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="{assembly:Null}"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,0">
+              End="0,52.5">
               <mssgle:Curve.Segments>
-                <assembly:Null />
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -6204,13 +6208,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="191.2,41.6"
-          Id="Package\DFT - Validate and Load Customers\Insert Changed Records"
-          TopLeft="1771.84165297022,599.166659968926" />
-        <NodeLayout
-          Size="169.6,41.6"
-          Id="Package\DFT - Validate and Load Customers\Insert New Records"
-          TopLeft="1383.19443792311,442.472219132963" />
+          Size="296,41.6"
+          Id="Package\DFT - Validate and Load Customers\DER - Common Columns for Rejected Records"
+          TopLeft="560.08332547918,635.833323858678" />
         <NodeLayout
           Size="239.2,41.6"
           Id="Package\DFT - Validate and Load Customers\LKP - Match Current DimCustomer"
@@ -6219,10 +6219,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Size="221.6,41.6"
           Id="Package\DFT - Validate and Load Customers\OLEDB CMD - Expire Old Row"
           TopLeft="1628.1999936074,306.999995425344" />
-        <NodeLayout
-          Size="325.6,41.6"
-          Id="Package\DFT - Validate and Load Customers\DER - Stamp Rejection Detail - Duplicate CustomerID"
-          TopLeft="0.571428562913439,363.285708872335" />
         <NodeLayout
           Size="119.2,41.6"
           Id="Package\DFT - Validate and Load Customers\Multicast"
@@ -6236,6 +6232,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\DFT - Validate and Load Customers\DER - Stamp Rejection Detail - Missing CustomerID"
           TopLeft="362.571423168693,367.265931621161" />
         <NodeLayout
+          Size="325.6,41.6"
+          Id="Package\DFT - Validate and Load Customers\DER - Stamp Rejection Detail - Duplicate CustomerID"
+          TopLeft="0.571428562913439,363.285708872335" />
+        <NodeLayout
+          Size="120,41.6"
+          Id="Package\DFT - Validate and Load Customers\Union All"
+          TopLeft="649.932539856209,527.046820101863" />
+        <NodeLayout
           Size="211.2,41.6"
           Id="Package\DFT - Validate and Load Customers\CSPLT - Route by Validation"
           TopLeft="581.471429079132,196.785712045738" />
@@ -6244,33 +6248,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\DFT - Validate and Load Customers\DB - RejectedRecords"
           TopLeft="614.2222146723,774.444433897734" />
         <NodeLayout
-          Size="120,41.6"
-          Id="Package\DFT - Validate and Load Customers\Union All"
-          TopLeft="649.932539856209,527.046820101863" />
+          Size="129.6,41.6"
+          Id="Package\DFT - Validate and Load Customers\Row Count"
+          TopLeft="644.222214225266,707.111102865802" />
         <NodeLayout
           Size="196.8,41.6"
           Id="Package\DFT - Validate and Load Customers\RecordsInsertedChanged"
           TopLeft="1508.79999523163,602.999992504716" />
         <NodeLayout
-          Size="296,41.6"
-          Id="Package\DFT - Validate and Load Customers\DER - Common Columns for Rejected Records"
-          TopLeft="560.08332547918,635.833323858678" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\DFT - Validate and Load Customers\Row Count"
-          TopLeft="644.222214225266,707.111102865802" />
-        <NodeLayout
-          Size="247.2,41.6"
-          Id="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table"
-          TopLeft="350.999995663762,16.0000006556511" />
-        <NodeLayout
           Size="175.2,41.6"
           Id="Package\DFT - Validate and Load Customers\RecordsInsertedNew"
           TopLeft="1381.38888509323,346.138885754263" />
         <NodeLayout
-          Size="209.6,41.6"
-          Id="Package\DFT - Validate and Load Customers\DER - Flag Validation Errors"
-          TopLeft="370.333328709006,93.6666661649941" />
+          Size="247.2,41.6"
+          Id="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table"
+          TopLeft="350.999995663762,16.0000006556511" />
         <NodeLayout
           Size="335.2,41.6"
           Id="Package\DFT - Validate and Load Customers\DER - Stamp Rejection Detail - Missing CustomerName"
@@ -6280,9 +6272,89 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\DFT - Validate and Load Customers\DER - Stamp Rejection Detail - Invalid Email"
           TopLeft="1089.88570116843,373.23735858965" />
         <NodeLayout
+          Size="169.6,41.6"
+          Id="Package\DFT - Validate and Load Customers\Insert New Records"
+          TopLeft="1383.19443792311,442.472219132963" />
+        <NodeLayout
+          Size="191.2,41.6"
+          Id="Package\DFT - Validate and Load Customers\Insert Changed Records"
+          TopLeft="1771.84165297022,599.166659968926" />
+        <NodeLayout
           Size="168.8,41.6"
           Id="Package\DFT - Validate and Load Customers\CSPLT - Changed?"
           TopLeft="1641.59997657537,208.999996885657" />
+        <NodeLayout
+          Size="209.6,41.6"
+          Id="Package\DFT - Validate and Load Customers\DER - Flag Validation Errors"
+          TopLeft="370.333328709006,93.6666661649941" />
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Union All Output 1]"
+          TopLeft="709.007932667694,568.646820101863">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.186503756815"
+              Start="0,0"
+              End="0,59.686503756815">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.686503756815" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Unchanged]"
+          TopLeft="1810.39997657537,229.88333058796">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90.31668162703,0"
+              Start="0,0"
+              End="82.81668162703,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="82.81668162703,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="16.326407219765,5,50.1638671875,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Row Count Output 12]"
+          TopLeft="707.022214448783,748.711102865802">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.733331031932"
+              Start="0,0"
+              End="0,18.233331031932">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.233331031932" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Validate and Load Customers.Paths[Row Count Output 11]"
           TopLeft="1705.59999523163,621.883326236821">
@@ -6297,6 +6369,50 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="58.74165773859,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Row Count Output 1]"
+          TopLeft="1468.49166150817,387.738885754263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.7333333787"
+              Start="0,0"
+              End="0,47.2333333787">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.2333333787" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[OLE DB Source Output]"
+          TopLeft="474.866662186384,57.6000006556511">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.066665509343"
+              Start="0,0"
+              End="0,28.566665509343">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.566665509343" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -6400,6 +6516,78 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Lookup No Match Output]"
+          TopLeft="1378.26665825579,242.266664431492">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90.7222268374401,103.872221322771"
+              Start="0,0"
+              End="90.7222268374401,96.372221322771">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.9361106613855" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.9361106613855"
+                    Point2="0,51.9361106613855"
+                    Point3="4,51.9361106613855" />
+                  <mssgle:LineSegment
+                    End="86.7222268374401,51.9361106613855" />
+                  <mssgle:CubicBezierSegment
+                    Point1="86.7222268374401,51.9361106613855"
+                    Point2="90.7222268374401,51.9361106613855"
+                    Point3="90.7222268374401,55.9361106613855" />
+                  <mssgle:LineSegment
+                    End="90.7222268374401,96.372221322771" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-10.4452733000299,56.9361106613855,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Lookup Match Output]"
+          TopLeft="1497.86665825579,221.466664431492">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="143.73331831958,8.333332454165"
+              Start="0,0"
+              End="136.23331831958,8.333332454165">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="67.8666591597899,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="67.8666591597899,0"
+                    Point2="71.8666591597899,0"
+                    Point3="71.8666591597899,4" />
+                  <mssgle:LineSegment
+                    End="71.8666591597899,4.333332454165" />
+                  <mssgle:CubicBezierSegment
+                    Point1="71.8666591597899,4.333332454165"
+                    Point2="71.8666591597899,8.333332454165"
+                    Point3="75.8666591597899,8.333332454165" />
+                  <mssgle:LineSegment
+                    End="136.23331831958,8.333332454165" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="23.6752724410399,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\DFT - Validate and Load Customers.Paths[Invalid_Email]"
           TopLeft="748.031429079132,238.385712045738">
           <EdgeLayout.Curve>
@@ -6469,6 +6657,62 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             <mssgm:EdgeLabel
               BoundingBox="-281.336211195609,42.1108616769121,99.932421875,11.609375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Derived Column Output6]"
+          TopLeft="475.133328709006,135.266666164994">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="211.938100370126,61.5190458807439"
+              Start="0,0"
+              End="211.938100370126,54.0190458807439">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.759522940372" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.759522940372"
+                    Point2="0,30.759522940372"
+                    Point3="4,30.759522940372" />
+                  <mssgle:LineSegment
+                    End="207.938100370126,30.759522940372" />
+                  <mssgle:CubicBezierSegment
+                    Point1="207.938100370126,30.759522940372"
+                    Point2="211.938100370126,30.759522940372"
+                    Point3="211.938100370126,34.759522940372" />
+                  <mssgle:LineSegment
+                    End="211.938100370126,54.0190458807439" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Validate and Load Customers.Paths[Derived Column Output5]"
+          TopLeft="708.552769852223,677.433323858678">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.6777790071239"
+              Start="0,0"
+              End="0,22.1777790071239">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.1777790071239" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6642,246 +6886,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[OLE DB Source Output]"
-          TopLeft="474.866662186384,57.6000006556511">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,36.066665509343"
-              Start="0,0"
-              End="0,28.566665509343">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.566665509343" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Derived Column Output6]"
-          TopLeft="475.133328709006,135.266666164994">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="211.938100370126,61.5190458807439"
-              Start="0,0"
-              End="211.938100370126,54.0190458807439">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.759522940372" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.759522940372"
-                    Point2="0,30.759522940372"
-                    Point3="4,30.759522940372" />
-                  <mssgle:LineSegment
-                    End="207.938100370126,30.759522940372" />
-                  <mssgle:CubicBezierSegment
-                    Point1="207.938100370126,30.759522940372"
-                    Point2="211.938100370126,30.759522940372"
-                    Point3="211.938100370126,34.759522940372" />
-                  <mssgle:LineSegment
-                    End="211.938100370126,54.0190458807439" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Union All Output 1]"
-          TopLeft="709.007932667694,568.646820101863">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,67.186503756815"
-              Start="0,0"
-              End="0,59.686503756815">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,59.686503756815" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Derived Column Output5]"
-          TopLeft="708.552769852223,677.433323858678">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,29.6777790071239"
-              Start="0,0"
-              End="0,22.1777790071239">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.1777790071239" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Row Count Output 12]"
-          TopLeft="707.022214448783,748.711102865802">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,25.733331031932"
-              Start="0,0"
-              End="0,18.233331031932">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,18.233331031932" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Valid]"
-          TopLeft="792.671429079132,219.526188238615">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="465.995229176658,0"
-              Start="0,0"
-              End="458.495229176658,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="458.495229176658,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="217.896442713329,5,22.70234375,9.7490234375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Lookup No Match Output]"
-          TopLeft="1378.26665825579,242.266664431492">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="90.7222268374401,103.872221322771"
-              Start="0,0"
-              End="90.7222268374401,96.372221322771">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,47.9361106613855" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,47.9361106613855"
-                    Point2="0,51.9361106613855"
-                    Point3="4,51.9361106613855" />
-                  <mssgle:LineSegment
-                    End="86.7222268374401,51.9361106613855" />
-                  <mssgle:CubicBezierSegment
-                    Point1="86.7222268374401,51.9361106613855"
-                    Point2="90.7222268374401,51.9361106613855"
-                    Point3="90.7222268374401,55.9361106613855" />
-                  <mssgle:LineSegment
-                    End="90.7222268374401,96.372221322771" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-10.44527330003,56.9361106613855,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Row Count Output 1]"
-          TopLeft="1468.49166150817,387.738885754263">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.7333333787"
-              Start="0,0"
-              End="0,47.2333333787">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,47.2333333787" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Lookup Match Output]"
-          TopLeft="1497.86665825579,221.466664431492">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="143.73331831958,8.333332454165"
-              Start="0,0"
-              End="136.23331831958,8.333332454165">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="67.8666591597899,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="67.8666591597899,0"
-                    Point2="71.8666591597899,0"
-                    Point3="71.8666591597899,4" />
-                  <mssgle:LineSegment
-                    End="71.8666591597899,4.333332454165" />
-                  <mssgle:CubicBezierSegment
-                    Point1="71.8666591597899,4.333332454165"
-                    Point2="71.8666591597899,8.333332454165"
-                    Point3="75.8666591597899,8.333332454165" />
-                  <mssgle:LineSegment
-                    End="136.23331831958,8.333332454165" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="23.6752724410399,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\DFT - Validate and Load Customers.Paths[Changed]"
           TopLeft="1725.99997657537,250.599996885657">
           <EdgeLayout.Curve>
@@ -6918,26 +6922,26 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - Validate and Load Customers.Paths[Unchanged]"
-          TopLeft="1810.39997657537,229.88333058796">
+          Id="Package\DFT - Validate and Load Customers.Paths[Valid]"
+          TopLeft="792.671429079132,219.526188238615">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="90.31668162703,0"
+              EndConnector="465.995229176658,0"
               Start="0,0"
-              End="82.81668162703,0">
+              End="458.495229176658,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="82.81668162703,0" />
+                    End="458.495229176658,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="16.326407219765,5,50.1638671875,11.6630859375"
+              BoundingBox="217.896442713329,5,22.70234375,9.7490234375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -6945,7 +6949,43 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Validate and Load Customers\Insert Changed Records">
+    design-time-name="Package\DFT - Validate and Load Customers\LKP - Match Current DimCustomer">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Validate and Load Customers\DB - RejectedRecords">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -6971,43 +7011,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Validate and Load Customers\LKP - Match Current DimCustomer">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Validate and Load Customers\DB - RejectedRecords">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table">
+    design-time-name="Package\DFT - Validate and Load Customers\Insert Changed Records">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
