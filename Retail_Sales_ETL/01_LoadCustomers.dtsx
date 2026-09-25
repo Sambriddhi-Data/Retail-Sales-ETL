@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="01_LoadCustomers"
   DTS:PackageType="5"
-  DTS:VersionBuild="155"
-  DTS:VersionGUID="{C864A6C9-F250-4A36-8A8B-0CCC9898D54C}">
+  DTS:VersionBuild="160"
+  DTS:VersionGUID="{02A54A49-4341-441B-B2B4-127CAD9959ED}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -147,24 +147,30 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+      DTS:refId="Package.ConnectionManagers[MainConfig]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{553A488C-6DC2-42E8-BC76-17B0F20CC404}"
-      DTS:ObjectName="ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa">
+      DTS:ObjectName="MainConfig">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::MainConnString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=ICS-LT-9NJ6043\SQLEXPRESS;User ID=sa;Initial Catalog=RetailDW;Provider=MSOLEDBSQL19.1;Persist Security Info=True;Trust Server Certificate=True;Application Name=SSIS-01_LoadCustomers-{553A488C-6DC2-42E8-BC76-17B0F20CC404}ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdoaXLukci0qI23dN+tWSGwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACm3MySjqQBGeEoN6zU7leUiNpraUuWxEmikjbVaNAp2AAAAAAOgAAAAAIAACAAAABYMfyVkyaKnEteMimtNObHYTo5ITXKfIJXxPZVB/UCESAAAAAfjWlFXMZ5yD8gRuIiAlJKMv3q48U4LB1NX6Z8jOjnR0AAAACN73WOrqxFW1yts3OXx9CZvaIhlbdjyiON7l0MLMOMQ96YPc7iKhGayKQlv9LkHqW5DSp3XsG5g2Lpi/y4O1tK</DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectRetryInterval="5" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{EE98B57C-5EB1-4E86-8A25-9BF3CC3590DD}"
+      DTS:ObjectName="MainConnString">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
+    </DTS:PackageParameter>
     <DTS:PackageParameter
       DTS:CreationName=""
       DTS:DataType="8"
@@ -197,6 +203,16 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{5BF16B1E-183D-4078-A82D-CC78181759B2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ClientConfig">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{5593B869-D946-4B11-B3B8-8F43384F21B0}"
       DTS:EvaluateAsExpression="True"
       DTS:Expression="@[$Project::ArchiveFolder]  &#xA;&#xA;+ LEFT(@[User::FileName], FINDSTRING(@[User::FileName], &quot;.&quot;, 1) - 1)&#xA;+ &quot;_&quot;&#xA;+ (DT_WSTR,4) YEAR(GETDATE())&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) MONTH(GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DAY(GETDATE()), 2)&#xA;+ &quot;_&quot;&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;hh&quot;, GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;mi&quot;, GETDATE()), 2)&#xA;+ &quot;.csv&quot;"
@@ -204,7 +220,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="DestinationPath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers_20260925_1509.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers_20260925_1829.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -215,7 +231,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ErrorFilePath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Error\Customers_20260925_1509.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Error\Customers_20260925_1829.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -368,8 +384,8 @@
               <connections>
                 <connection
                   refId="Package\DFT - Stage Customers\Customers Staging Table.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1271,8 +1287,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1589,8 +1605,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\DB - RejectedRecords.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2900,8 +2916,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Insert Changed Records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3113,8 +3129,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Insert New Records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3329,8 +3345,8 @@ where [refTable].[OldCustomerID] = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\LKP - Match Current DimCustomer.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -3533,8 +3549,8 @@ where [refTable].[OldCustomerID] = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\OLEDB CMD - Expire Old Row.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4845,15 +4861,6 @@ where [refTable].[OldCustomerID] = ?</property>
           Language="CSharp"
           ReadWriteVariables="User::BatchID">
           <ProjectItem
-            Name="Properties\Settings.settings"
-            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
-</SettingsFile>]]></ProjectItem>
-          <ProjectItem
             Name="Properties\Resources.resx"
             Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <root>
@@ -4972,6 +4979,35 @@ where [refTable].[OldCustomerID] = ?</property>
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties.Settings.get_Default():ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties.Sett" +
+    "ings")]
+
+namespace ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
           <ProjectItem
             Name="ScriptMain.cs"
             Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
@@ -5194,35 +5230,6 @@ namespace ST_e5d15766c4ed42e1842fb4511ea48a8f
   </msb:ItemGroup>
 </c:Project>]]></ProjectItem>
           <ProjectItem
-            Name="Properties\Settings.Designer.cs"
-            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------
-
-[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties.Settings.get_Default():ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties.Sett" +
-    "ings")]
-
-namespace ST_e5d15766c4ed42e1842fb4511ea48a8f.Properties {
-    
-    
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        private static Settings defaultInstance = new Settings();
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
-        }
-    }
-}]]></ProjectItem>
-          <ProjectItem
             Name="Properties\AssemblyInfo.cs"
             Encoding="UTF8"><![CDATA[using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -5252,6 +5259,15 @@ using System.Runtime.CompilerServices;
 // by using the '*' as shown below:
 
 [assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
           <ProjectItem
             Name="Properties\Resources.Designer.cs"
             Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
@@ -5451,35 +5467,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           ReadOnlyVariables="User::FileName,$Project::ArchiveFolder,$Project::SourceFolder"
           ReadWriteVariables="User::DestinationPath">
           <ProjectItem
-            Name="Properties\AssemblyInfo.cs"
-            Encoding="UTF8"><![CDATA[using System.Reflection;
-using System.Runtime.CompilerServices;
-
-//
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-//
-[assembly: AssemblyTitle("ST_387e7fedf7184d5d84e21d168a5f73a9")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST_387e7fedf7184d5d84e21d168a5f73a9")]
-[assembly: AssemblyCopyright("Copyright @  2026")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
           <ProjectItem
             Name="Properties\Resources.resx"
             Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -5891,14 +5886,35 @@ namespace ST_387e7fedf7184d5d84e21d168a5f73a9.Properties {
     }
 }]]></ProjectItem>
           <ProjectItem
-            Name="Properties\Settings.settings"
-            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
-</SettingsFile>]]></ProjectItem>
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_387e7fedf7184d5d84e21d168a5f73a9")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_387e7fedf7184d5d84e21d168a5f73a9")]
+[assembly: AssemblyCopyright("Copyright @  2026")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
           <ProjectItem
             Name="Properties\Resources.Designer.cs"
             Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
@@ -6946,7 +6962,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6992,7 +7010,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7014,7 +7034,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7036,7 +7058,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7058,7 +7082,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7080,7 +7106,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7330,7 +7358,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7352,7 +7382,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7386,7 +7418,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7420,7 +7454,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7454,7 +7490,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7488,7 +7526,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7522,7 +7562,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout

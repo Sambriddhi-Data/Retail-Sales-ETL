@@ -6,31 +6,70 @@
   DTS:CreatorComputerName="ICS-LT-9NJ6043"
   DTS:CreatorName="INFICS\samshrestha"
   DTS:DTSID="{71AD549A-AA51-4940-86D2-87944B9CEA61}"
+  DTS:EnableConfig="True"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1016.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="2"
-  DTS:VersionGUID="{3C7E0607-7C9E-45AF-A7D9-E95ABDBED253}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{68F8B95B-3DD2-41F3-80E0-83A709A44F2F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:Variables />
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[client1Config]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AA08664D-08AB-4F5C-9D92-2C62469BA084}"
+      DTS:ObjectName="client1Config">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::MainConnString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ICS-LT-9NJ6043\SQLEXPRESS;Initial Catalog=Client1_RetailDW;Provider=MSOLEDBSQL19.1;Integrated Security=SSPI;Trust Server Certificate=True;Application Name=SSIS-Package1-{AA08664D-08AB-4F5C-9D92-2C62469BA084}client1Config;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\Users\samshrestha\source\repos\Retail_Sales_ETL\ssisconfig.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{2B2BE793-224A-4E77-961E-65185FBB75BC}"
+      DTS:ObjectName="MainConnValue" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{64F6909C-F020-4632-B9EB-1C8D0F3A762B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="MainConnString">
+      <DTS:VariableValue
+        DTS:DataType="8">Data Source=ICS-LT-9NJ6043\SQLEXPRESS;Initial Catalog=Client1_RetailDW;Provider=MSOLEDBSQL19.1;Integrated Security=SSPI;Trust Server Certificate=True;Application Name=SSIS-Package1-{AA08664D-08AB-4F5C-9D92-2C62469BA084}client1Config;</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\EPT - 01 Losd Customers"
+      DTS:refId="Package\EPT - 01 Load Customers"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
       DTS:DTSID="{66D9E894-AD16-4E5D-A3BB-206939C4599D}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="EPT - 01 Losd Customers"
+      DTS:ObjectName="EPT - 01 Load Customers"
       DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
         <ExecutePackageTask>
           <UseProjectReference>True</UseProjectReference>
           <PackageName>01_LoadCustomers.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>MainConnString</ParameterName>
+            <BindedVariableOrParameterName>User::MainConnString</BindedVariableOrParameterName>
+          </ParameterAssignment>
         </ExecutePackageTask>
       </DTS:ObjectData>
     </DTS:Executable>
@@ -38,6 +77,7 @@
       DTS:refId="Package\EPT - 02 Load Products"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
+      DTS:Disabled="True"
       DTS:DTSID="{AC7843E0-3A50-4522-9B64-3FDA25577004}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
@@ -55,6 +95,7 @@
       DTS:refId="Package\EPT - 03 Load Stores"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
+      DTS:Disabled="True"
       DTS:DTSID="{6B6A20FA-9410-45F2-9241-1C77C348EE1A}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
@@ -72,6 +113,7 @@
       DTS:refId="Package\EPT - 04 Load Sales"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
+      DTS:Disabled="True"
       DTS:DTSID="{A4EF923F-8AD1-479C-9F1E-687960F8954C}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
@@ -91,7 +133,7 @@
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
       DTS:DTSID="{9DCA487E-98EA-4803-AFD4-C13F5C5FA812}"
-      DTS:From="Package\EPT - 01 Losd Customers"
+      DTS:From="Package\EPT - 01 Load Customers"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
       DTS:To="Package\EPT - 02 Load Products" />
@@ -125,8 +167,8 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="197.6,41.6"
-          Id="Package\EPT - 01 Losd Customers"
+          Size="198.4,41.6"
+          Id="Package\EPT - 01 Load Customers"
           TopLeft="178.33332358963,59.7999995841583" />
         <NodeLayout
           Size="188.8,41.6"
@@ -142,30 +184,30 @@
           TopLeft="272.13332222369,295.866665449275" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="277.13332358963,101.399999584158">
+          TopLeft="277.53332358963,101.399999584158">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="114.766660155688,30.3333328331179"
+              EndConnector="114.366660155688,30.3333328331177"
               Start="0,0"
-              End="114.766660155688,22.8333328331179">
+              End="114.366660155688,22.8333328331177">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,11.166666416559" />
+                    End="0,11.1666664165588" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,11.166666416559"
-                    Point2="0,15.166666416559"
-                    Point3="4,15.166666416559" />
+                    Point1="0,11.1666664165588"
+                    Point2="0,15.1666664165588"
+                    Point3="4,15.1666664165588" />
                   <mssgle:LineSegment
-                    End="110.766660155688,15.166666416559" />
+                    End="110.366660155688,15.1666664165588" />
                   <mssgle:CubicBezierSegment
-                    Point1="110.766660155688,15.166666416559"
-                    Point2="114.766660155688,15.166666416559"
-                    Point3="114.766660155688,19.166666416559" />
+                    Point1="110.366660155688,15.1666664165588"
+                    Point2="114.366660155688,15.1666664165588"
+                    Point3="114.366660155688,19.1666664165588" />
                   <mssgle:LineSegment
-                    End="114.766660155688,22.8333328331179" />
+                    End="114.366660155688,22.8333328331177" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

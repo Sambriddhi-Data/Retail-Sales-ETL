@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="01_LoadCustomers"
   DTS:PackageType="5"
-  DTS:VersionBuild="154"
-  DTS:VersionGUID="{4D5CDDF0-B2E3-417D-8296-0B7155A67EB3}">
+  DTS:VersionBuild="160"
+  DTS:VersionGUID="{02A54A49-4341-441B-B2B4-127CAD9959ED}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -147,24 +147,30 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+      DTS:refId="Package.ConnectionManagers[MainConfig]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{553A488C-6DC2-42E8-BC76-17B0F20CC404}"
-      DTS:ObjectName="ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa">
+      DTS:ObjectName="MainConfig">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::MainConnString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=ICS-LT-9NJ6043\SQLEXPRESS;User ID=sa;Initial Catalog=RetailDW;Provider=MSOLEDBSQL19.1;Persist Security Info=True;Trust Server Certificate=True;Application Name=SSIS-01_LoadCustomers-{553A488C-6DC2-42E8-BC76-17B0F20CC404}ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdoaXLukci0qI23dN+tWSGwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADE9zfqt6H3EG5G+W569DKajCBgQImjU2d0MYy55PHKgwAAAAAOgAAAAAIAACAAAABNEmkV5mkITzloMdEjSFUr21nkFogiwBhZ6OFImooMGCAAAACdpc54J3camCzytaBfksgpWbaYAHZsk1V2Qng2InwHu0AAAAB1b7KcG3BSnNvSyL6ssuLYGdY/dWRaX9f16M31O0XYtO0VEsquRrisX3BJMSnmThaMq8dEDR6O77CU1Rp3sdk+</DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectRetryInterval="5" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{EE98B57C-5EB1-4E86-8A25-9BF3CC3590DD}"
+      DTS:ObjectName="MainConnString">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
+    </DTS:PackageParameter>
     <DTS:PackageParameter
       DTS:CreationName=""
       DTS:DataType="8"
@@ -197,6 +203,16 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{5BF16B1E-183D-4078-A82D-CC78181759B2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ClientConfig">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{5593B869-D946-4B11-B3B8-8F43384F21B0}"
       DTS:EvaluateAsExpression="True"
       DTS:Expression="@[$Project::ArchiveFolder]  &#xA;&#xA;+ LEFT(@[User::FileName], FINDSTRING(@[User::FileName], &quot;.&quot;, 1) - 1)&#xA;+ &quot;_&quot;&#xA;+ (DT_WSTR,4) YEAR(GETDATE())&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) MONTH(GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DAY(GETDATE()), 2)&#xA;+ &quot;_&quot;&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;hh&quot;, GETDATE()), 2)&#xA;+ RIGHT(&quot;0&quot; + (DT_WSTR,2) DATEPART(&quot;mi&quot;, GETDATE()), 2)&#xA;+ &quot;.csv&quot;"
@@ -204,7 +220,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="DestinationPath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers_20260925_1426.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Archive\Customers_20260925_1850.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -215,7 +231,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ErrorFilePath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Error\Customers_20260925_1426.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\samshrestha\Downloads\RetailSalesData\Error\Customers_20260925_1850.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -368,8 +384,8 @@
               <connections>
                 <connection
                   refId="Package\DFT - Stage Customers\Customers Staging Table.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1271,8 +1287,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1589,8 +1605,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\DB - RejectedRecords.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2349,13 +2365,13 @@ WHERE BatchID = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">(DT_STR,50,1252)"Email"</property>
+                          name="Expression">(DT_STR,50,1252)#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(DT_STR,50,1252)"Email"</property>
+                          name="FriendlyExpression">(DT_STR,50,1252)Email</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -2373,13 +2389,13 @@ WHERE BatchID = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">(DT_STR,50,1252)#{Package\DFT - Validate and Load Customers\Data Load - Customer Staging Table.Outputs[OLE DB Source Output].Columns[Email]}</property>
+                          name="Expression">(DT_STR,50,1252)"Email"</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(DT_STR,50,1252)Email</property>
+                          name="FriendlyExpression">(DT_STR,50,1252)"Email"</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -2900,8 +2916,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Insert Changed Records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3113,8 +3129,8 @@ WHERE BatchID = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\Insert New Records.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3329,8 +3345,8 @@ where [refTable].[OldCustomerID] = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\LKP - Match Current DimCustomer.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -3533,8 +3549,8 @@ where [refTable].[OldCustomerID] = ?</property>
               <connections>
                 <connection
                   refId="Package\DFT - Validate and Load Customers\OLEDB CMD - Expire Old Row.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
-                  connectionManagerRefId="Package.ConnectionManagers[ICS-LT-9NJ6043\SQLEXPRESS.RetailDW.sa]"
+                  connectionManagerID="Package.ConnectionManagers[MainConfig]"
+                  connectionManagerRefId="Package.ConnectionManagers[MainConfig]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6946,7 +6962,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6992,7 +7010,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7014,7 +7034,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7036,7 +7058,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7058,7 +7082,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7080,7 +7106,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7330,7 +7358,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7352,7 +7382,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7386,7 +7418,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7420,7 +7454,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7454,7 +7490,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7488,7 +7526,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7522,7 +7562,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
